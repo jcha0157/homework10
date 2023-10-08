@@ -1,0 +1,193 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 600,
+    "height": 400,
+    "title": { "text": "Upload Frequency vs Number of Subscribers Results" },
+    "data": {"url": "../data/Global_YouTube_Statistics.csv"},
+    "params": [
+        {
+            "name": "Country_selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "Afghanistan",
+                    "Argentina",
+                    "Australia",
+                    "Bangladesh",
+                    "Barbados",
+                    "Brazil",
+                    "Canada",
+                    "Chile",
+                    "China",
+                    "Colombia",
+                    "Cuba",
+                    "Ecuador",
+                    "Egypt",
+                    "El Salvador",
+                    "Finland",
+                    "France",
+                    "Germany",
+                    "India",
+                    "Indonesia",
+                    "Iraq",
+                    "Italy",
+                    "Japan",
+                    "Jordan",
+                    "Kuwait",
+                    "Latvia",
+                    "Malaysia",
+                    "Mexico",
+                    "Morocco",
+                    "Netherlands",
+                    "Pakistan",
+                    "Peru",
+                    "Philippines",
+                    "Russia",
+                    "Samoa",
+                    "Saudi Arabia",
+                    "Singapore",
+                    "South Korea",
+                    "Spain",
+                    "Sweden",
+                    "Switzerland",
+                    "Thailand",
+                    "Turkey",
+                    "Ukraine",
+                    "United Arab Emirates",
+                    "United Kingdom",
+                    "United States",
+                    "Venezuela",
+                    "Vietnam"
+                ],
+                "labels": [
+                    "Show All",
+                    "Afghanistan",
+                    "Argentina",
+                    "Australia",
+                    "Bangladesh",
+                    "Barbados",
+                    "Brazil",
+                    "Canada",
+                    "Chile",
+                    "China",
+                    "Colombia",
+                    "Cuba",
+                    "Ecuador",
+                    "Egypt",
+                    "El Salvador",
+                    "Finland",
+                    "France",
+                    "Germany",
+                    "India",
+                    "Indonesia",
+                    "Iraq",
+                    "Italy",
+                    "Japan",
+                    "Jordan",
+                    "Kuwait",
+                    "Latvia",
+                    "Malaysia",
+                    "Mexico",
+                    "Morocco",
+                    "Netherlands",
+                    "Pakistan",
+                    "Peru",
+                    "Philippines",
+                    "Russia",
+                    "Samoa",
+                    "Saudi Arabia",
+                    "Singapore",
+                    "South Korea",
+                    "Spain",
+                    "Sweden",
+                    "Switzerland",
+                    "Thailand",
+                    "Turkey",
+                    "Ukraine",
+                    "United Arab Emirates",
+                    "United Kingdom",
+                    "United States",
+                    "Venezuela",
+                    "Vietnam"
+                ],
+                "name": "Select Country: "
+            }
+        }
+    ],
+    "transform": [
+        {"filter": "Country_selection == null || datum.Country == Country_selection"},
+        {"filter": "datum.subscribers > 0"}, 
+        {"filter": "datum.uploads > 0"},
+        {"calculate": "datum.subscribers / 1000000", "as": "subscribers_in_millions"}
+    ],
+    "encoding": {
+        "x": {
+            "field": "subscribers_in_millions",
+            "type": "quantitative",
+            "title": "Number of Subscribers (in millions)",
+            "axis": {"tickCount": 3},
+            "scale": {"type": "log", "base": 10, "domain": [1, 1000]}
+        },
+        "y": {
+            "field": "uploads", 
+            "type": "quantitative",
+            "title": "Upload Frequency",
+            "axis": {"tickCount": 6},
+            "scale": {"type": "log", "base": 10, "domain": [1, 1000000]}
+        },
+        "tooltip": [
+            {"field": "Youtuber", "type": "nominal"},
+            {"field": "subscribers", "type": "quantitative", "title": "Number of Subscribers", "format": ","},
+            {"field": "uploads", "type": "quantitative", "title": "Upload Frequency", "format": ","},
+            {"field": "Country", "type": "nominal"},
+            {"field": "channel_type", "type": "nominal", "title": "Channel Type"}
+        ]
+    },
+    "layer": [
+        {
+            "mark": "point",
+            "encoding": {
+
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 10,
+                "fontSize": 11
+            },
+            "encoding": {
+                "text": {
+                    "field": "Youtuber",
+                    "type": "nominal"
+                },
+                "color": {
+                    "value": "black"
+                },
+                "opacity": {
+                    "condition": {
+                        "test": "datum.Youtuber == 'T-Series' || datum.Youtuber == 'IndiaTV' || datum.Youtuber == 'Sports' || datum.Youtuber == 'Zee Telugu' || datum.Youtuber == '5-Minute Crafts' || datum.Youtuber == 'Movieclips' || datum.Youtuber == 'Zee Tamil' || datum.Youtuber == 'RedeTV'",
+                        "value": 1
+                    },
+                    "value": 0
+                }
+            }
+        }
+    ],  
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "titleFont": "PT Serif"
+    },
+    "title": {
+      "font": "PT Serif",
+      "fontSize": 16,
+      "fontWeight": 600
+    }
+  }  
+}
