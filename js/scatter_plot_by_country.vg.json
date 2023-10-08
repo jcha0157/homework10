@@ -3,7 +3,7 @@
     "width": 600,
     "height": 400,
     "title": { "text": "Upload Frequency vs Number of Subscribers Results" },
-    "data": {"url": "../data/Global_YouTube_Statistics.csv"},
+    "data": {"url": "https://raw.githubusercontent.com/jcha0157/homework10/main/data/Global_YouTube_Statistics.csv"},
     "params": [
         {
             "name": "Country_selection",
